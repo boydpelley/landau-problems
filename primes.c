@@ -24,7 +24,7 @@ bool is_prime(unsigned long long number)
 
 void add_primes_to_list(unsigned long long *primes, unsigned long long size)
 {
-    printf("Starting to add primes to the list\n");
+    printf("Starting to add primes to the list.\n");
     unsigned long long current_num = 2;
     unsigned long long i = 0;
     while (i < size)

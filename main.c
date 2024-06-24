@@ -3,8 +3,10 @@
 #include <limits.h>
 
 #include "primes.h"
+#include "perfect_squares.h"
 #include "goldbachs_conjecture.h"
 #include "twin_prime_conjecture.h"
+#include "legendres_conjecture.h"
 
 void add_primes()
 {
@@ -17,6 +19,19 @@ void add_primes()
     }
 
     add_primes_to_list(primes, PRIMES_SIZE);
+}
+
+void add_squares()
+{
+    perfect_squares = (unsigned long long *)calloc(SQUARES_SIZE, sizeof(unsigned long long));
+
+    if (perfect_squares == NULL)
+    {
+        fprintf(stderr, "Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    add_perfect_squares_to_list(perfect_squares, SQUARES_SIZE);
 }
 
 void handle_goldbach()
@@ -41,6 +56,16 @@ void handle_twin_prime()
     }
 }
 
+void handle_legendre()
+{
+    add_squares();
+
+    for (int i = 0; i < SQUARES_SIZE - 1; i++)
+    {
+        legendres(perfect_squares, i);
+    }
+}
+
 int main()
 {
     printf("Which landeau problem would you like to see?\n");
@@ -49,11 +74,11 @@ int main()
     printf("3. Legendre's Conjecture - There always exists at least one prime between consecutive perfect squares.\n");
 
     short conjecture_type = 0;
-    while (conjecture_type != 1 || conjecture_type != 2)
+    while (conjecture_type != 1 || conjecture_type != 2 || conjecture_type != 3)
     {
         scanf("%hd", &conjecture_type);
 
-        if (conjecture_type == 1 || conjecture_type == 2)
+        if (conjecture_type == 1 || conjecture_type == 2 || conjecture_type == 3)
             break;
         printf("Invalid entry. Try again.\n");
     }
@@ -67,6 +92,10 @@ int main()
     case 2:
         printf("Starting Twin Prime calculations\n");
         handle_twin_prime();
+        break;
+    case 3:
+        printf("Starting Legendre calculations\n");
+        handle_legendre();
         break;
     default:
         break;
