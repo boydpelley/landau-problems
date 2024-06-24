@@ -28,5 +28,5 @@ void goldbachs(const unsigned long long *primes, unsigned long long n)
         }
     }
 
-    printf("Goldbach's conjecture could not be verified for %d.\n", n);
+    printf("Goldbach's Conjecture could not be verified for %llu.\n", n);
 }
