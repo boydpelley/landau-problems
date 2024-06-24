@@ -1,16 +1,15 @@
 #ifndef PRIMES_H
 #define PRIMES_H
 
+#include <limits.h>
 #include <stdbool.h>
 
-typedef struct
-{
-    int *array;
-    size_t length;
-} primes_t;
+#define PRIMES_SIZE 0xffff
 
-bool is_prime(int number);
-void add_primes_to_list(primes_t *primes, int size);
-bool contains(const primes_t *primes, int number);
+unsigned long long *primes;
+
+bool is_prime(unsigned long long number);
+void add_primes_to_list(unsigned long long *primes, unsigned long long size);
+bool contains(const unsigned long long *primes, unsigned long long number);
 
 #endif // PRIMES_H

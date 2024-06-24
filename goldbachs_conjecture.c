@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "primes.h"
 #include "goldbachs_conjecture.h"
 
-void goldbachs(const primes_t *primes, int n)
+void goldbachs(const unsigned long long *primes, unsigned long long n)
 {
     if (n < 4 || n % 2 != 0)
     {
@@ -12,16 +13,17 @@ void goldbachs(const primes_t *primes, int n)
         return;
     }
 
-    for (size_t i = 0; i < primes->length; ++i)
+    for (unsigned long long i = 0; i < PRIMES_SIZE; i++)
     {
-        int prime1 = primes->array[i];
+        unsigned long long prime1 = primes[i];
         if (prime1 >= n)
             break; // No need to check primes greater than or equal to n
 
-        int prime2 = n - prime1;
+        unsigned long long prime2 = n - prime1;
         if (contains(primes, prime2))
         {
-            printf("%d = %d + %d\n", n, prime1, prime2);
+            assert(prime1 + prime2 == n);
+            printf("%llu = %llu + %llu\n", n, prime1, prime2);
             return;
         }
     }

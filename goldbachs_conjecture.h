@@ -6,6 +6,6 @@
 
 #include "primes.h"
 
-void goldbachs(const primes_t *primes, int n);
+void goldbachs(const unsigned long long *primes, unsigned long long n);
 
 #endif // GOLDBACHS_CONJECTURE_H
