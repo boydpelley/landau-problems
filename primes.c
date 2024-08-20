@@ -1,52 +1,76 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "primes.h"
 
-bool is_prime(unsigned long long number)
+bool *is_prime;
+unsigned long long *primes;
+int prime_count = 0;
+
+void sieve()
 {
-    if (number == 0 || number == 1)
+    is_prime = (bool *)calloc(PRIMES_SIZE + 1, sizeof(bool));
+    if (is_prime == NULL)
     {
-        return false;
+        fprintf(stderr, "Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
     }
 
-    for (unsigned long long i = 2; i <= number / 2; i++)
+    for (int i = 2; i <= PRIMES_SIZE; i++)
     {
-        if (number % i == 0)
+        is_prime[i] = true;
+    }
+    for (int i = 2; i * i <= PRIMES_SIZE; i++)
+    {
+        if (is_prime[i])
         {
-            return false;
+            for (int j = i * i; j <= PRIMES_SIZE; j += i)
+            {
+                is_prime[j] = false;
+            }
+        }
+    }
+    for (int i = 2; i <= PRIMES_SIZE; i++)
+    {
+        if (is_prime[i])
+        {
+            primes[prime_count++] = i;
         }
     }
 
-    return true;
+    free(is_prime);
 }
 
-void add_primes_to_list(unsigned long long *primes, unsigned long long size)
+long long phi(long long n, int k)
 {
-    printf("Starting to add primes to the list.\n");
-    unsigned long long current_num = 2;
-    unsigned long long i = 0;
-    while (i < size)
-    {
-        printf("Currently on number %llu\n", current_num);
-        if (is_prime(current_num))
-        {
-            primes[i] = current_num;
-            i++;
-        }
-        current_num++;
-    }
+    if (k == 0)
+        return n;
+    if (n < primes[k - 1])
+        return 1;
+    return phi(n, k - 1) - phi(n / primes[k - 1], k - 1);
 }
 
-bool contains(const unsigned long long *primes, unsigned long long number)
+long long pi(long long n)
 {
-    for (size_t i = 0; i < PRIMES_SIZE; i++)
+    if (n < MAX_PRIME)
     {
-        if (primes[i] == number)
+        int count = 0;
+        for (int i = 0; i < prime_count && primes[i] <= n; i++)
         {
-            return true;
+            count++;
         }
+        return count;
     }
-    return false;
+
+    int a = pi(cbrt(n));
+    long long result = phi(n, a) + a - 1;
+
+    for (int i = 0; i < a; i++)
+    {
+        result -= pi(n / primes[i]);
+    }
+
+    return result;
 }

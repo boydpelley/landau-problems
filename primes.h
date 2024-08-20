@@ -4,12 +4,15 @@
 #include <limits.h>
 #include <stdbool.h>
 
+#define MAX_N 1000000000
+#define MAX_PRIME 1000000
 #define PRIMES_SIZE 0xffff
 
+bool *is_prime;
 unsigned long long *primes;
 
-bool is_prime(unsigned long long number);
-void add_primes_to_list(unsigned long long *primes, unsigned long long size);
-bool contains(const unsigned long long *primes, unsigned long long number);
+void sieve();
+long long phi(long long n, int k);
+long long pi(long long n);
 
 #endif // PRIMES_H

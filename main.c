@@ -11,14 +11,13 @@
 void add_primes()
 {
     primes = (unsigned long long *)calloc(PRIMES_SIZE, sizeof(unsigned long long));
-
     if (primes == NULL)
     {
         fprintf(stderr, "Memory allocation failed.\n");
         exit(EXIT_FAILURE);
     }
 
-    add_primes_to_list(primes, PRIMES_SIZE);
+    sieve();
 }
 
 void add_squares()

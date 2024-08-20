@@ -17,7 +17,7 @@ void twin_primes(const unsigned long long *primes, unsigned long long i)
 
     if (prime2 == prime1 + 2)
     {
-        assert(is_prime(prime2));
+        assert(is_prime[prime2]);
         printf("(%llu, %llu)\n", prime1, prime2);
         return;
     }

@@ -20,7 +20,7 @@ void goldbachs(const unsigned long long *primes, unsigned long long n)
             break; // No need to check primes greater than or equal to n
 
         unsigned long long prime2 = n - prime1;
-        if (contains(primes, prime2))
+        if (is_prime[prime2])
         {
             assert(prime1 + prime2 == n);
             printf("%llu = %llu + %llu\n", n, prime1, prime2);
